@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- 引入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Josefin+Sans:ital,wght@0,225;1,225&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- 引入樣式表 -->
+    <link rel="stylesheet" href="css.css">
+
+    <style>
+        * {box-sizing: border-box;}
+        
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;  /* 保持影片比例，裁切超出部分以填滿屏幕 */
+            z-index: -1;        /* 讓背景影片位於內容下方 */
+        }
+        .slideshow-container {
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+            margin: 80px auto;
+            z-index: 1; /* 確保幻燈片位於背景之上 */
+            opacity: 0; /* 隱藏幻燈片 */
+            transition: opacity 1s ease-in-out; /* 淡入過渡效果 */
+        }
+
+        /* 幻燈片圖片 */
+        .mySlides {
+            display: none;
+        }
+
+        /* 顯示圖片過渡 */
+        .mySlides img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* 顯示影片的字幕區域 */
+        .subtitle {
+            text-align: center;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 24px;
+            color: #fff;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0; /* 隱藏字幕 */
+            transition: opacity 1s ease-in-out; /* 淡入效果 */
+        }
+
+        /* 下一步和上一步按鈕 */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            user-select: none;
+            z-index: 1; /* 按鈕位於背景之上 */
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: #809bc78b;
+        }
+
+        /* 點擊小圓點切換幻燈片 */
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #809bc700;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #809bc700;
+        }
+
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        /* 撥放器區域的樣式 */
+        #musicPlayer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #c9cdd0;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            width: 100px;
+            font-family: Italiana, sans-serif;
+            font-size: 15px;
+        }
+
+        /* 進度條和音量控制樣式 */
+        #progressBar, #volumeControl {
+            width: 100%;
+            margin: 10px 0;
+            appearance: none;
+            height: 7px;
+            border-radius: 5px;
+            background: #f4f5fcc3;
+        }
+
+        #progressBar::-webkit-slider-thumb, #volumeControl::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background-color: #537db0;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* 撥放/暫停按鈕的樣式 */
+        #playPauseButton {
+            background-color: #cbcccc;
+            color: rgb(255, 255, 255);
+            font-family: Italiana, sans-serif;
+            font-size: 15px;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #playPauseButton:hover {
+            background-color: #537db0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景影片 -->
+    <video class="background-video" autoplay muted loop>
+        <source src="photo/Twenty ver-.mp4" type="video/mp4">
+    </video>
+
+    <!-- 固定頂部導航欄 -->
+    <div id="top">
+        <ul>
+            <li><a href="ARTIST.html" class="artist-link">ARTIST</a>
+                <ul class="dropdown">
+                    <li><a href="SUNGHO.html">SUNGHO</a></li>
+                    <li><a href="RIWOO.html">RIWOO</a></li>
+                    <li><a href="MJH.html">JaeHyun</a></li>
+                    <li><a href="TAESAN.html">TAESAN</a></li>
+                    <li><a href="LEEHAN.html">LEEHAN</a></li>
+                    <li><a href="WOONHAK.html">WOONHAK</a></li>
+                </ul>
+            </li>
+            <li><a href="who.html">ALBUMS</a>
+                <ul class="dropdown">
+                    <li><a href="who.html">WHO!</a></li>
+                    <li><a href="whyT.html">WHY..</a></li>
+                    <li><a href="how.html">HOW?</a></li>
+                    <li><a href="and.html">AND,</a></li>
+                    <li><a href="1999.html">19.99</a></li>
+                </ul>
+            </li>
+            <li><a href="Official.html">OFFICIAL</a></li>
+        </ul>
+    </div>
+
+    <!-- 幻燈片容器 -->
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <img src="photo/A1 (1).jpeg" alt="Slide 1">
+        </div>
+        <div class="mySlides fade">
+            <img src="photo/A1 (2).jpeg" alt="Slide 2">
+        </div>
+        <div class="mySlides fade">
+            <img src="photo/A1 (3).jpeg" alt="Slide 3">
+        </div>
+        <div class="mySlides fade">
+            <img src="photo/A1 (4).jpeg" alt="Slide 4">
+        </div>
+        <div class="mySlides fade">
+            <img src="photo/A1 (5).jpeg" alt="Slide 5">
+        </div>
+        <div class="mySlides fade">
+            <img src="photo/A1 (6).jpeg" alt="Slide 6">
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+        }
+    </script>
+
+    <!-- 音樂播放器 -->
+    <div id="musicPlayer">
+        <button id="playPauseButton">PLAY MUSIC</button>
+        <audio id="audio" preload="auto">
+            <source src="photo/20.mp3" type="audio/mp3">
+        </audio>
+
+        <input type="range" id="progressBar" value="0" max="100">
+        <input type="range" id="volumeControl" value="50" max="100">
+    </div>
+
+    <script>
+        // 播放器控制
+        const playPauseButton = document.getElementById("playPauseButton");
+        const audio = document.getElementById("audio");
+        const progressBar = document.getElementById("progressBar");
+        const volumeControl = document.getElementById("volumeControl");
+
+        playPauseButton.addEventListener("click", () => {
+            if (audio.paused) {
+                audio.play();
+                playPauseButton.innerHTML = "PAUSE";
+            } else {
+                audio.pause();
+                playPauseButton.innerHTML = "PLAY MUSIC";
+            }
+        });
+
+        // 更新進度條
+        audio.addEventListener("timeupdate", () => {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            progressBar.value = progress;
+        });
+
+        // 更新音量
+        volumeControl.addEventListener("input", () => {
+            audio.volume = volumeControl.value / 100;
+        });
+    </script>
+</body>
+</html>
